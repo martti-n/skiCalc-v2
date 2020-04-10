@@ -1,5 +1,7 @@
 # skicalc
 
+Improved my previous idea with Vuex. Looks and feels better now.
+
 ## Project setup
 ```
 npm install
