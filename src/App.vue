@@ -30,7 +30,7 @@ export default {
 }
 
 body {
-    background-color: #192734;
+    background-color: rgb(25, 39, 52);
 }
 
 html {
