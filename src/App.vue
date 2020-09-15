@@ -1,43 +1,38 @@
 <template>
   <div id="app">
-    <TopHeader />
-    <Item />
+    <Main />
   </div>
 </template>
 
 <script>
-import Item from './components/item'
-import TopHeader from './components/top-header.vue'
+import Main from './components/Main';
 
 export default {
   name: 'App',
   components: {
-    TopHeader,
-    Item
+    Main,
   },
-  methods: {
-    
-  }
-}
+};
 </script>
 
 <style>
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: #192734;
+  background-color: #192734;
 }
 
 html {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 500;
-    color: #f3f3f3;
-    
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  color: #f3f3f3;
 }
 
+.v-step__content {
+  font-weight: 400;
+}
 </style>

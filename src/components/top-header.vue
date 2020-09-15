@@ -1,10 +1,11 @@
 <template>
   <div>
     <h1>SKICALC</h1>
-    <h3>enter your fis-height below</h3>
+    <h3>Enter you FIS-height below</h3>
     <form>
       <div class="input-container">
         <input
+          id="v-step-1"
           class="height-input"
           v-model="userData.height"
           type="number"
@@ -12,19 +13,20 @@
           @keypress.enter.prevent="calculateResults"
         />
       </div>
+      <h3>Amount of results</h3>
       <div class="center-item">
-        <vue-slider v-model="userData.amountOfResults" :width="200" :max="25" :dotSize="16" />
+        <vue-slider v-model="userData.amountOfResults" :width="200" :max="25" :dotSize="16" id="v-step-2" />
       </div>
       <div>
-        <button type="button" @click="calculateResults" class="btn1">CALCULATE</button>
+        <a @click="calculateResults" id="v-step-3" class="calculate-button">CALCULATE</a>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import VueSlider from "vue-slider-component";
-import "vue-slider-component/theme/antd.css";
+import VueSlider from 'vue-slider-component';
+import 'vue-slider-component/theme/antd.css';
 
 export default {
   components: {
@@ -33,20 +35,22 @@ export default {
   data() {
     return {
       userData: {
-        height: "",
+        height: '',
         amountOfResults: 10,
       },
     };
   },
   methods: {
     calculateResults() {
-      this.$store.dispatch("calculateData", this.userData);
+      this.$store.commit('RESET_STATE', []);
+      this.$store.dispatch('calculateData', this.userData);
+      this.$emit('calculate');
     },
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .center-item {
   padding: 20px 0;
   display: flex;
@@ -72,30 +76,45 @@ h3 {
 .height-input {
   height: 42px;
   font-size: 20px;
+  border-radius: 10px;
   width: auto;
   text-align: center;
   background-color: #15202b;
-  border: solid 1px;
+  border: none;
   color: #ffffff;
   outline: none;
+  transition: all 0.3s;
+  &::placeholder {
+    color: #ffffff;
+  }
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: #ffffff;
+    color: #15202b;
+    &::placeholder {
+      color: #15202b;
+    }
+  }
 }
 
-.btn1 {
-  display: block;
-  width: 120px;
-  height: 30px;
+.calculate-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 40px;
   margin: 10px auto;
-  border: solid rgb(255, 255, 255) 1px;
   color: #ffffff;
+  border-radius: 20px;
   background: #15202b;
-  transition: background 0.3s;
+  transition: all 0.3s;
   font-size: 95%;
-  outline: none;
   font-weight: 500;
 }
 
-.btn1:hover,
-.btn1:active {
+.calculate-button:hover,
+.calculate-button:active {
   background: #f3f3f3;
   color: #15202b;
   cursor: pointer;
