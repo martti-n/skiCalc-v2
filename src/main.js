@@ -2,6 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store.js'
 import VueTour from 'vue-tour'
+import wb from "./registerServiceWorker";
+
+Vue.prototype.$workbox = wb;
 
 require('vue-tour/dist/vue-tour.css')
 
