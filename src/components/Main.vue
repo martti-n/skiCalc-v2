@@ -38,14 +38,14 @@ export default {
       anime({
         targets: '.result-item',
         translateX: {
-          value: [-800, 0],
+          value: [-700, 0],
           duration: 20,
         },
         opacity: {
           value: [0, 1],
           duration: 100,
         },
-        delay: anime.stagger(70),
+        delay: anime.stagger(70, { start: 200 }),
       });
     },
     activateAnimateItems() {
