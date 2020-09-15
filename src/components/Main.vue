@@ -1,13 +1,15 @@
 <template>
-  <div class="main-container">
-    <img src="../../public/icons/icons8-info-50.png" alt="#" class="info-icon" @click="startTour">
+  <div>
+    <div class="info-container">
+      <img src="../../public/icons/icons8-info-50.png" alt="#" class="info-icon" @click="startTour" />
+    </div>
     <TopHeader @calculate="activateAnimateItems" />
     <div class="items" v-if="skiData">
       <div v-for="item in skiData" :key="item.id">
         <ResultItem :item="item" class="result-item" />
       </div>
     </div>
-    <v-tour name="skiCalcTour" :steps="steps"/>
+    <v-tour name="skiCalcTour" :steps="steps" />
   </div>
 </template>
 
@@ -25,8 +27,8 @@ export default {
   computed: {
     ...mapGetters({
       skiData: 'skiData',
-      steps: 'steps'
-    })
+      steps: 'steps',
+    }),
   },
   methods: {
     startTour() {
@@ -56,7 +58,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.main-container {
+.info-container {
   padding-left: 20px;
   padding-top: 20px;
 }
@@ -69,5 +71,8 @@ export default {
   margin: 0px auto;
   width: 33%;
   margin-top: 20px;
+  @media (max-width: 400px) {
+    width: 100%;
+  }
 }
 </style>

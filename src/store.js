@@ -70,7 +70,7 @@ export default new Vuex.Store({
         }
         state.skiData = skiData;
       } else {
-        alert('Please enter height between 140-200 \n AND select amount of results!');
+        alert('Please enter height between 140-200');
       }
     },
     RESET_STATE(state, value) {
