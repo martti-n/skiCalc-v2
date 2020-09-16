@@ -82,6 +82,7 @@ export default new Vuex.Store({
         bmi -= 0.125;
       }
       state.skiData = skiData;
+      state.selectedSearchOption = {};
     },
     RESET_STATE(state, value) {
       state.skiData = value;

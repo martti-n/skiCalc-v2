@@ -2,9 +2,14 @@
   <div>
     <div class="info-container">
       <img src="../../public/icons/icons8-info-50.png" alt="#" class="info-icon" @click="startTour" />
+      <div class="latest-search-toggle">
+        <span @click="showLatest = !showLatest">Show latest searches</span>
+      </div>
+      <div class="tooltip" v-if="showLatest">
+        <LatestSearches />
+      </div>
     </div>
     <TopHeader @calculate="activateAnimateItems" />
-    <LatestSearches />
     <div class="items" v-if="skiData">
       <div v-for="item in skiData" :key="item.id">
         <ResultItem :item="item" class="result-item" />
@@ -25,8 +30,11 @@ export default {
   components: {
     TopHeader,
     ResultItem,
-    LatestSearches
+    LatestSearches,
   },
+  data: () => ({
+    showLatest: false,
+  }),
   computed: {
     ...mapGetters({
       skiData: 'skiData',
@@ -64,6 +72,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.latest-search-toggle {
+  padding-top: 10px;
+  span {
+    &:hover {
+      cursor: pointer;
+      border-bottom: 2px solid #fff;
+    }
+  }
+}
 .info-container {
   padding-left: 20px;
   padding-top: 20px;
@@ -80,5 +97,16 @@ export default {
   @media (max-width: 400px) {
     width: 100%;
   }
+}
+.tooltip {
+  position: absolute;
+  margin-top: 10px;
+  width: 200px;
+  background: #15202b;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 20px 10px 20px;
+  border-radius: 10px;
+  transform: translate-x(-50%);
 }
 </style>

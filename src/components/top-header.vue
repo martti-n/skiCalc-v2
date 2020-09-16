@@ -47,19 +47,19 @@ export default {
         this.userData.height = this.selectedSearchOption.height;
         this.userData.amountOfResults = this.selectedSearchOption.amountOfResults;
       }
-    }
+    },
   },
   computed: {
     ...mapGetters({
       selectedSearchOption: 'selectedSearchOption',
-      values: 'values'
-    })
+      values: 'values',
+    }),
   },
   methods: {
     calculateResults() {
       this.$store.commit('RESET_STATE', []);
       const height = parseInt(this.userData.height);
-      if ( height > this.values.minValue && height < this.values.maxValue ) {
+      if (height > this.values.minValue && height < this.values.maxValue) {
         this.$store.dispatch('calculateData', this.userData);
       } else {
         alert('Please enter height between 140-200');
@@ -131,12 +131,11 @@ h3 {
   transition: all 0.3s;
   font-size: 95%;
   font-weight: 500;
-}
-
-.calculate-button:hover,
-.calculate-button:active {
-  background: #f3f3f3;
-  color: #15202b;
-  cursor: pointer;
+  &:hover,
+  &:active {
+    background: #f3f3f3;
+    color: #15202b;
+    cursor: pointer;
+  }
 }
 </style>
