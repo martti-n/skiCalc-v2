@@ -4,6 +4,7 @@
       <img src="../../public/icons/icons8-info-50.png" alt="#" class="info-icon" @click="startTour" />
     </div>
     <TopHeader @calculate="activateAnimateItems" />
+    <LatestSearches />
     <div class="items" v-if="skiData">
       <div v-for="item in skiData" :key="item.id">
         <ResultItem :item="item" class="result-item" />
@@ -18,17 +19,22 @@ import { mapGetters } from 'vuex';
 import anime from 'animejs';
 import ResultItem from './item';
 import TopHeader from './top-header.vue';
+import LatestSearches from './LatestSearches';
 
 export default {
   components: {
     TopHeader,
     ResultItem,
+    LatestSearches
   },
   computed: {
     ...mapGetters({
       skiData: 'skiData',
       steps: 'steps',
     }),
+  },
+  async mounted() {
+    await this.$store.commit('SET_SEARCH_ITEMS');
   },
   methods: {
     startTour() {

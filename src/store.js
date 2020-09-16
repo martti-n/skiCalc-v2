@@ -3,13 +3,24 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+const getLocalStorage = () => {
+  const items = window.localStorage.getItem('searches');
+  if (items) {
+    return JSON.parse(items);
+  } else {
+    return [];
+  }
+};
+
 export default new Vuex.Store({
   state: {
+    selectedSearchOption: {},
+    searchOptions: [],
     skiData: [],
-    maxValue: 200,
-    minValue: 140,
-    height: 0,
-    amountOfResults: 0,
+    values: {
+      maxValue: 200,
+      minValue: 140,
+    },
     steps: [
       {
         target: '#v-step-1',
@@ -47,34 +58,47 @@ export default new Vuex.Store({
   getters: {
     skiData: (state) => state.skiData,
     steps: (state) => state.steps,
+    searchOptions: (state) => state.searchOptions,
+    selectedSearchOption: (state) => state.selectedSearchOption,
+    values: (state) => state.values,
   },
   mutations: {
     CALCULATE_DATA(state, userData) {
       let skiData = [];
 
-      if (userData.height <= state.maxValue && userData.height >= state.minValue) {
-        let h = 145;
-        let bmi = 21;
-        for (let i = 0; i < userData.amountOfResults; i++) {
-          const dataBundle = {
-            skiLength: 0,
-            weight: 0,
-          };
-          dataBundle.skiLength = ((h * userData.height) / 100).toFixed(0);
-          dataBundle.weight = ((bmi * userData.height ** 2) / 10000).toFixed(1);
+      let h = 145;
+      let bmi = 21;
+      for (let i = 0; i < userData.amountOfResults; i++) {
+        const dataBundle = {
+          skiLength: 0,
+          weight: 0,
+        };
+        dataBundle.skiLength = ((h * userData.height) / 100).toFixed(0);
+        dataBundle.weight = ((bmi * userData.height ** 2) / 10000).toFixed(1);
 
-          skiData.push(dataBundle);
+        skiData.push(dataBundle);
 
-          h -= 0.5;
-          bmi -= 0.125;
-        }
-        state.skiData = skiData;
-      } else {
-        alert('Please enter height between 140-200');
+        h -= 0.5;
+        bmi -= 0.125;
       }
+      state.skiData = skiData;
     },
     RESET_STATE(state, value) {
       state.skiData = value;
+    },
+    STORE_SEARCH_OPTIONS(state, value) {
+      state.searchOptions.push(value);
+      if (state.searchOptions.length > 3) {
+        state.searchOptions.shift();
+        window.localStorage.removeItem('searches');
+      }
+      window.localStorage.setItem('searches', JSON.stringify(state.searchOptions));
+    },
+    SELECT_SEARCH_OPTION(state, option) {
+      state.selectedSearchOption = option;
+    },
+    SET_SEARCH_ITEMS(state) {
+      state.searchOptions = getLocalStorage();
     },
   },
   actions: {
@@ -83,6 +107,7 @@ export default new Vuex.Store({
         height: parseInt(userData.height),
         amountOfResults: parseInt(userData.amountOfResults),
       };
+      commit('STORE_SEARCH_OPTIONS', newUserData);
       commit('CALCULATE_DATA', newUserData);
     },
   },

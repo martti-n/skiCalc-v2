@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/antd.css';
 
@@ -40,10 +41,29 @@ export default {
       },
     };
   },
+  watch: {
+    selectedSearchOption() {
+      if (this.selectedSearchOption) {
+        this.userData.height = this.selectedSearchOption.height;
+        this.userData.amountOfResults = this.selectedSearchOption.amountOfResults;
+      }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      selectedSearchOption: 'selectedSearchOption',
+      values: 'values'
+    })
+  },
   methods: {
     calculateResults() {
       this.$store.commit('RESET_STATE', []);
-      this.$store.dispatch('calculateData', this.userData);
+      const height = parseInt(this.userData.height);
+      if ( height > this.values.minValue && height < this.values.maxValue ) {
+        this.$store.dispatch('calculateData', this.userData);
+      } else {
+        alert('Please enter height between 140-200');
+      }
       this.$emit('calculate');
     },
   },
