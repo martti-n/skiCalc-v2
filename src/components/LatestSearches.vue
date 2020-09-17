@@ -1,16 +1,19 @@
 <template>
   <div class="search-container">
     <div style="margin-bottom: 10px;">
-      <span>Quick select:</span>
+      <span>Latest searches:</span>
     </div>
-    <div
-      v-for="option in searchOptions"
-      :key="option.id"
-      @click="calculateAgain(option)"
-      class="search-item"
-      :class="{ selected: selectedSearchOption === option }"
-    >
-      {{ option.height }}cm {{ option.amountOfResults }} results
+    <div v-if="searchOptions.length">
+      <div
+        v-for="option in searchOptions"
+        :key="option.id"
+        @click="calculateAgain(option)"
+        class="search-item"
+        :class="{ selected: selectedSearchOption === option }"
+      >{{ option.height }}cm {{ option.amountOfResults }} results</div>
+    </div>
+    <div v-else>
+      <div class="empty-search">No searches.</div>
     </div>
   </div>
 </template>
@@ -34,6 +37,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.empty-search {
+  padding: 50px;
+  color: #fff;
+  background-color: #192734;
+}
 .search-item {
   display: flex;
   justify-content: center;

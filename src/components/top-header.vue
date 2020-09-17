@@ -43,9 +43,10 @@ export default {
   },
   watch: {
     selectedSearchOption() {
-      if (this.selectedSearchOption) {
+      if (this.selectedSearchOption.height) {
         this.userData.height = this.selectedSearchOption.height;
         this.userData.amountOfResults = this.selectedSearchOption.amountOfResults;
+        this.$emit('calculate');
       }
     },
   },

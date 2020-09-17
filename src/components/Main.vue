@@ -3,7 +3,7 @@
     <div class="info-container">
       <img src="../../public/icons/icons8-info-50.png" alt="#" class="info-icon" @click="startTour" />
       <div class="latest-search-toggle">
-        <span @click="showLatest = !showLatest">Show latest searches</span>
+        <span @click="showLatest = !showLatest">Quick select:</span>
       </div>
       <div class="tooltip" v-if="showLatest">
         <LatestSearches />

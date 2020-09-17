@@ -99,7 +99,10 @@ export default new Vuex.Store({
       state.selectedSearchOption = option;
     },
     SET_SEARCH_ITEMS(state) {
-      state.searchOptions = getLocalStorage();
+      const searchOptions = getLocalStorage();
+      if (searchOptions) {
+        state.searchOptions = searchOptions;
+      }
     },
   },
   actions: {
